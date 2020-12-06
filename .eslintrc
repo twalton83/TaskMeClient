@@ -11,6 +11,9 @@
     "prettier"
   ],
   "rules": {
+    "no-unused-vars": ["warn"],
+    "react/self-closing-comp" : ["off"],
+    "react/prop-types" : ["off"],
     "semi": 0,
     "react/jsx-filename-extension": [
       1,
