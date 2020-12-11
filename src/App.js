@@ -97,7 +97,6 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [projects, setProjects] = useState([]);
   const [currProject, setCurrProject] = useState();
   const grabStorage = () => {
     let user;
@@ -110,6 +109,7 @@ function App() {
     return user;
   }
   const [user, setUser] = useState(grabStorage())
+  const [projects, setProjects] = useState(user.projects);
 
   return (
     <section className={classes.root}>
