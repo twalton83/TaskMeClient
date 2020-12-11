@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -9,32 +11,20 @@ import { CirclePicker } from 'react-color';
 
 
 const useStyles = makeStyles((theme) => ({
-  modal : {
-    width: "50%",
-    height: '40%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    padding: "1rem"
-  },
+
   header : {
-    borderBottom: "3px solid #eb5e28",
     marginBottom: "1rem",
     margin: "0 auto"
   },
   addButton : {
-    backgroundColor: "#eb5e28",
-    fontWeight: 500
+    fontWeight: 500,
+    margin: '1rem 0 1rem 0',
+    float: "right"
   },
   form : {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: "1rem"
   }
 
 }));
@@ -46,34 +36,38 @@ function ProjectModal({ open , handleClose}) {
     setColor(newColor)
   }
   const createProject = (e) => {
-    
+    e.preventDefault()
   }
+  const [fullWidth, setFullWidth] = useState(true);
   return (
-  <Modal
+  <Dialog
   open={open}
   onClose={handleClose}
   aria-labelledby="simple-modal-title"
   aria-describedby="simple-modal-description"
   >    
-  <Paper className={classes.modal} elevation={3}>
-    <Typography align="center" className={classes.header} variant = "h4">
-      Add a Project
-    </Typography>
+  <DialogTitle
+  style =  {{ backgroundColor: color.hex}}
+  >
+    Add A Project
+  </DialogTitle>
+  <DialogContent>
     <form className={classes.form} onSubmit={createProject}>
       <TextField label="Project Name" name = "projectName" type="text"/> 
     </form>
     <Typography variant="subtitle1">
-        Project Color
-      </Typography>
+      Color
+    </Typography>
     <CirclePicker 
     color={color}
     onChange = {handleColorChange}
     /> 
-    <Button className={classes.addButton} variant="contained">
+    <Button 
+    style={{backgroundColor: color.hex}} className={classes.addButton} >
       Submit
     </Button>
-  </Paper>
-  </Modal>
+    </DialogContent>
+  </Dialog>
   )
 }
 
