@@ -1,6 +1,7 @@
 export default class Section {
-  constructor(name){
+  constructor(name, project){
     this.name = name
+    this.project = project
     this.tasks = []
   }
 }

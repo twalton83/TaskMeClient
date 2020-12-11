@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
+import { Transition } from 'react-transition-group';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -19,9 +20,9 @@ import AddIcon from '@material-ui/icons/Add';
 import HomeView from './components/HomeView'
 import ProjectsList from './components/ProjectsList'
 import TaskView from './components/TaskView';
+import User from './modules/User';
 
 const drawerWidth = 240
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -96,8 +97,20 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [project, setProject] = useState(null)
-  const [projects, setProjects] = useState(["test", "test", "test"])
+  const [projects, setProjects] = useState([]);
+  const [currProject, setCurrProject] = useState();
+  const grabStorage = () => {
+    let user;
+    if(localStorage.getItem('taskMe') === null){
+      user = new User()
+    } else {
+      user =  JSON.parse(localStorage.getItem('taskMe'))
+    }
+
+    return user;
+  }
+  const [user, setUser] = useState(grabStorage())
+
   return (
     <section className={classes.root}>
      <CssBaseline />
@@ -167,7 +180,7 @@ function App() {
       <Switch>
         <Route exact path="/projects" render = {()=> <ProjectsList projects = { projects } />}/>
         <Route exact path="/projects/:projectName"
-          render = {() => <TaskView project={project}/>}/>
+          render = {() => <TaskView project={currProject}/>}/>
         <Route exact path="/" render = {() => <HomeView/> }>
         </Route>
       </Switch>

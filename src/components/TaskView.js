@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function TaskView() {
+export default function TaskView({ project }) {
+  
   return (
     <div>
       taskview
