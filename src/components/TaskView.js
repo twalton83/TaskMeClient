@@ -4,7 +4,7 @@ export default function TaskView({ project }) {
   
   return (
     <div>
-      taskview
+      <h1>{project.name}</h1>
     </div>
   )
 }

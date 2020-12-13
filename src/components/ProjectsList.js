@@ -1,26 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, {useState} from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import ProjectModal from './ProjectModal'
 import ProjectCard from './ProjectCard';
+import useStyles from './styles/ProjectListStyle';
 
-const drawerWidth = 240
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  addProjectButton : {
-    "&:hover" : {
-      backgroundColor: "#eb5e28"
-    }
-
-  }
-}))
 
 function ProjectsList({ projects, setUser }) {
   const classes = useStyles()
@@ -33,10 +21,22 @@ function ProjectsList({ projects, setUser }) {
   }
   return (
       <Grid container spacing = {3}>
-        <Grid item xs = {12}>
-          <Typography variant = "h2" component="h1">
-            Projects
-          </Typography>
+        <Grid container>
+          <Grid  item xs = {6}>
+            <Typography item xs= {6} variant = "h2" component="h1">
+              Projects
+            </Typography>
+          </Grid>
+          <Grid  item xs = {6}>
+            { projects.length === 0 &&
+              <Button item xs= {6} className={classes.addProjectButton}
+              variant="contained"
+              onClick = {handleOpen}
+              >
+                Add A Project
+              </Button>
+            }
+          </Grid> 
         </Grid>
         { projects.length > 0 && projects.map((project) => (
           <Grid key={project.id} item xs = {12} sm = {6} md = {4} >
