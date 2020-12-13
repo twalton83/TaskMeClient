@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {Link} from 'react-router-dom';
+import { CardHeader } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -16,16 +18,29 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  link : {
+    textDecoration: 'none',
+    color: 'black'
+  }
+
 });
 
 export default function ProjectCard({ project }) {
   const classes = useStyles();
   return (
     <Card>
+      <CardHeader style={{backgroundColor: project.color.hex}} title = {project.name}>
+      </CardHeader>
       <CardContent>
-        <Typography variant = "h5">
-          {project}
+
+        <Typography paragraph>
+          Projects - {project.tasks.length}
         </Typography>
+        <Button variant="contained">
+          <Link className={classes.link} to={`/projects/${project.name}`}>
+            Details
+          </Link>
+        </Button>
       </CardContent>
     </Card>
     

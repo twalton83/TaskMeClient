@@ -97,7 +97,6 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [currProject, setCurrProject] = useState();
   const grabStorage = () => {
     let user;
     if(localStorage.getItem('taskMe') === null){
@@ -105,11 +104,9 @@ function App() {
     } else {
       user =  JSON.parse(localStorage.getItem('taskMe'))
     }
-
     return user;
   }
   const [user, setUser] = useState(grabStorage())
-  const [projects, setProjects] = useState(user.projects);
 
   return (
     <section className={classes.root}>
@@ -178,9 +175,9 @@ function App() {
       >
       <div className={classes.drawerHeader} />
       <Switch>
-        <Route exact path="/projects" render = {()=> <ProjectsList projects = { projects } />}/>
+        <Route exact path="/projects" render = {()=> <ProjectsList setUser = {setUser} projects = { user.projects } />}/>
         <Route exact path="/projects/:projectName"
-          render = {() => <TaskView project={currProject}/>}/>
+          render = {(routeProps) => <TaskView project={routeProps.projectName}/>}/>
         <Route exact path="/" render = {() => <HomeView/> }>
         </Route>
       </Switch>

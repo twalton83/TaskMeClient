@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
-import Modal from '@material-ui/core/Modal';
 import ProjectModal from './ProjectModal'
 import ProjectCard from './ProjectCard';
 
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function ProjectsList({ projects }) {
+function ProjectsList({ projects, setUser }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -40,7 +39,7 @@ function ProjectsList({ projects }) {
           </Typography>
         </Grid>
         { projects.length > 0 && projects.map((project) => (
-          <Grid item xs = {12} sm = {6} md = {4} >
+          <Grid key={project.id} item xs = {12} sm = {6} md = {4} >
             <ProjectCard project = {project}/>
           </Grid>
         ))}
@@ -55,7 +54,7 @@ function ProjectsList({ projects }) {
           </Button>
         </Grid>       
         }   
-        <ProjectModal handleClose = {handleClose} open = {open}/>
+        <ProjectModal setUser = {setUser} handleClose = {handleClose} open = {open}/>
       </Grid>
   )
 }

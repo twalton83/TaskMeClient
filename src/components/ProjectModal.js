@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { CirclePicker } from 'react-color';
-
+import Project from '../modules/Project';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -29,16 +29,27 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function ProjectModal({ open , handleClose}) {
+function ProjectModal({ open , handleClose, setUser}) {
   const classes = useStyles()
-  const [color, setColor] = useState("#f44336");
-  const handleColorChange = (newColor, event) => {
+  const [projectName, setProjectName] = useState("");
+  const [color, setColor] = useState({hex: "#f44336"});
+  const handleColorChange = (newColor) => {
     setColor(newColor)
   }
   const createProject = (e) => {
     e.preventDefault()
+    const project = new Project(projectName, color)
+    console.log(project)
+    setUser(prevState => ({
+      ... prevState,
+      projects: [...prevState.projects, project]
+    }))
+    handleClose()
   }
-  const [fullWidth, setFullWidth] = useState(true);
+  const handleProjectNameChange = (e) =>{
+    setProjectName(e.target.value)
+  }
+ 
   return (
   <Dialog
   open={open}
@@ -53,7 +64,7 @@ function ProjectModal({ open , handleClose}) {
   </DialogTitle>
   <DialogContent>
     <form className={classes.form} onSubmit={createProject}>
-      <TextField label="Project Name" name = "projectName" type="text"/> 
+      <TextField label="Project Name" name = "projectName" type="text" onChange={handleProjectNameChange} value={projectName}/> 
     </form>
     <Typography variant="subtitle1">
       Color
@@ -63,7 +74,9 @@ function ProjectModal({ open , handleClose}) {
     onChange = {handleColorChange}
     /> 
     <Button 
-    style={{backgroundColor: color.hex}} className={classes.addButton} >
+    style={{backgroundColor: color.hex}} className={classes.addButton} 
+    onClick={createProject}
+    >
       Submit
     </Button>
     </DialogContent>
