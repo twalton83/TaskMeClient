@@ -1,21 +1,24 @@
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery } from '@material-ui/core';
 
 const drawerWidth = 240
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '100%'
   },
-  addButton : {
+  addButton: {
     backgroundColor: "#eb5e28",
     color: "#FFFFFF",
-    marginLeft: "85%"
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: "#252422"
+    backgroundColor: "#252422",
+
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -27,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#eb5e28",
+    }
   },
   hide: {
     display: 'none',
@@ -62,7 +68,20 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  toolbar: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: '0 1rem 0 1rem'
+  },
+  navContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  }
 
 }))
 
-export {useStyles, drawerWidth}
+export { useStyles, drawerWidth }

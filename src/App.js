@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { Transition } from 'react-transition-group';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import clsx from 'clsx'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from '@material-ui/core/AppBar'
@@ -21,8 +21,9 @@ import HomeView from './components/HomeView'
 import ProjectsList from './components/ProjectsList'
 import TaskView from './components/TaskView';
 import User from './modules/User';
-import {drawerWidth, useStyles} from './components/styles/AppStyle';
-
+import { drawerWidth, useStyles } from './components/styles/AppStyle';
+import Task from './modules/Task';
+import TaskModal from './components/TaskModal';
 
 function App() {
   const classes = useStyles()
@@ -34,9 +35,16 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => {
+    setModalOpen(true)
+  }
+  const handleModalClose = () =>{
+    setModalOpen(false)
+  }
   const grabStorage = () => {
     let user;
-    if(localStorage.getItem('taskMe') === null){
+    if(localStorage.getItem('taskMe') === null) {
       user = new User()
     } else {
       user =  JSON.parse(localStorage.getItem('taskMe'))
@@ -46,47 +54,50 @@ function App() {
   const [user, setUser] = useState(grabStorage())
 
   const findProject = (projectId) => user.projects.find(project => projectId === project.id)
-  
+
+
 
   return (
-    <section className={classes.root}>
+    <section className={ classes.root }>
      <CssBaseline />
       <AppBar
         position="fixed"
-        className={clsx(classes.appBar, {
+        className={ clsx(classes.appBar, {
           [classes.appBarShift]: open,
-        })}
+        }) }
       >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Task.Me
-          </Typography>
-          <IconButton className={classes.addButton}>
+        <Toolbar className={ classes.toolbar } disableGutters>
+          <div className = { classes.navContainer }>
+            <IconButton
+              color="inherit" 
+              aria-label="open drawer"
+              onClick={ handleDrawerOpen }
+              edge="start"
+              className={ clsx(classes.menuButton, open && classes.hide) }
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              Task.Me
+            </Typography>
+          </div>
+          <IconButton onClick= { handleModalOpen } className={ classes.addButton }>
             <AddIcon/>
           </IconButton>
         </Toolbar>
       </AppBar>
       <Toolbar/>
       <Drawer
-        className={classes.drawer}
+        className={ classes.drawer }
         variant="persistent"
         anchor="left"
-        open={open}
-        classes={{
+        open={ open }
+        classes={ {
           paper: classes.drawerPaper,
-        }}
+        } }
       >
-         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+         <div className={ classes.drawerHeader }>
+          <IconButton onClick={ handleDrawerClose }>
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
@@ -103,25 +114,23 @@ function App() {
             <Link to="/projects">Projects</Link>
           </ListItem>
         </List>
-   
         <Divider />
         <List />
       </Drawer>
-
       <main
-        className={clsx(classes.content, {
+        className={ clsx(classes.content, {
           [classes.contentShift]: open,
-        })}
+        }) }
       >
-      <div className={classes.drawerHeader} />
-      <Switch>
-        <Route exact path="/projects" render = {()=> <ProjectsList setUser = {setUser} projects = { user.projects } />}/>
-        <Route exact path="/projects/:projectName"
-          render = {(routeProps) => <TaskView project={findProject(routeProps.projectId)}/>}/>
-        <Route exact path="/" render = {() => <HomeView/> }>
-        </Route>
-      </Switch>
-      </main>
+        <div className={ classes.drawerHeader } />
+        <Switch>
+          <Route exact path="/projects" render = { ()=> <ProjectsList setUser = { setUser } projects = { user.projects } /> }/>
+          <Route exact path="/projects/:projectName"
+            render = { (routeProps) => <TaskView project={ findProject(routeProps.projectId) }/> }/>
+          <Route exact path="/" render = { () => <HomeView projects = { user.projects } /> } />
+        </Switch>
+        <TaskModal setUser = { setUser } handleClose = {handleModalClose} open = {modalOpen}/>
+        </main>
     </section>
   )
 }

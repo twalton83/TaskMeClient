@@ -11,10 +11,22 @@
     "prettier"
   ],
   "rules": {
-    "no-unused-vars": ["warn"],
-    "react/self-closing-comp" : ["off"],
-    "react/prop-types" : ["off"],
-    "semi": 0,
+    "no-unused-vars": 1,
+    "space-before-blocks": 1,
+    "eol-last" : "warn",
+    "react/self-closing-comp" : 1,
+    "react/prop-types" : 0,
+    "semi": ["off"],
+    "padded-blocks" : 1,
+    "key-spacing" : 1,
+    "object-curly-spacing": 1,
+    "react/jsx-curly-spacing" : [ 
+      "warn", 
+      {
+        "when" : "always"
+      }
+    
+    ],
     "react/jsx-filename-extension": [
       1,
       {
@@ -23,7 +35,6 @@
           ".jsx"
         ]
       }
-    ],
-    "prettier/prettier": 0
+    ]
   }
 }

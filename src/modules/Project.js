@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Project {
-  constructor(name, color){
+  constructor(name, color) {
     this.name = name
     this.sections = []
     this.tasks = []
@@ -9,16 +9,15 @@ export default class Project {
     this.id = uuidv4()
   }
 
-  addTask(task){
+  addTask(task) {
     this.tasks.push(task)
   }
 
-  addSection(section){
+  addSection(section) {
     this.sections.push(section)
   }
 
-  deleteTask(id){
+  deleteTask(id) {
     this.tasks = this.tasks.filter(task => task.id !== id)
   }
-
 }

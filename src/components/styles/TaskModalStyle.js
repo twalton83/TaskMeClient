@@ -1,10 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-
   header: {
     marginBottom: "1rem",
-    margin: "0 auto"
+    backgroundColor: "#eb5e28",
   },
   addButton: {
     fontWeight: 500,

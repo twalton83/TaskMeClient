@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  link : {
+  link: {
     textDecoration: 'none',
     color: 'black'
   }
