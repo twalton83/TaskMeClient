@@ -12,10 +12,12 @@
   ],
   "rules": {
     "no-unused-vars": 1,
+    "arrow-body-style": 0,
     "space-before-blocks": 1,
     "eol-last" : "warn",
     "react/self-closing-comp" : 1,
     "react/prop-types" : 0,
+    "import/prefer-default-export" :0,
     "semi": ["off"],
     "padded-blocks" : 1,
     "key-spacing" : 1,

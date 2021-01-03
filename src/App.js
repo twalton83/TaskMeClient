@@ -24,6 +24,7 @@ import User from './modules/User';
 import { drawerWidth, useStyles } from './components/styles/AppStyle';
 import Task from './modules/Task';
 import TaskModal from './components/TaskModal';
+import { findProject } from './modules/hooks';
 
 function App() {
   const classes = useStyles()
@@ -53,7 +54,7 @@ function App() {
   }
   const [user, setUser] = useState(grabStorage())
 
-  const findProject = (projectId) => user.projects.find(project => projectId === project.id)
+
 
 
 
@@ -125,11 +126,13 @@ function App() {
         <div className={ classes.drawerHeader } />
         <Switch>
           <Route exact path="/projects" render = { ()=> <ProjectsList setUser = { setUser } projects = { user.projects } /> }/>
+
           <Route exact path="/projects/:projectName"
-            render = { (routeProps) => <TaskView project={ findProject(routeProps.projectId) }/> }/>
+            render = { routeProps => <TaskView project={ findProject(user, routeProps.match.params.projectName) }/> }/>
+
           <Route exact path="/" render = { () => <HomeView projects = { user.projects } /> } />
         </Switch>
-        <TaskModal setUser = { setUser } handleClose = {handleModalClose} open = {modalOpen}/>
+        <TaskModal user = { user } setUser = { setUser } handleClose = { handleModalClose } open = { modalOpen }/>
         </main>
     </section>
   )

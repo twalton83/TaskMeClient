@@ -16,7 +16,8 @@ export default function ProjectCard({ project }) {
       <CardContent>
 
         <Typography paragraph>
-          Projects - {project.tasks.length}
+
+        Number of Tasks: {project.tasks.length}
         </Typography>
       
       </CardContent>

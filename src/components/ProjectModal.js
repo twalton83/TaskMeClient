@@ -12,6 +12,7 @@ import useStyles from './styles/ProjectModalStyle';
 
 function ProjectModal({ open , handleClose, setUser }) {
   const classes = useStyles()
+  
   const [projectName, setProjectName] = useState("");
   const [color, setColor] = useState({ hex: "#f44336" });
   const handleColorChange = (newColor) => {
