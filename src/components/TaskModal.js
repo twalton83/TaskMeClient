@@ -2,24 +2,26 @@ import React, { useState } from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 import MenuItem from '@material-ui/core/MenuItem';
-import Project from '../modules/Project';
+import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './styles/TaskModalStyle';
 import Task from '../modules/Task';
 import { findProject } from '../modules/hooks';
 
 function TaskModal({ open, handleClose, user, setUser }) {
-  console.log(user.projects)
   const classes = useStyles()
   const [taskName, setTaskName] = useState("");
   const [project, setProject] = useState("All Tasks");
-  const [priority, setPriority] = useState(null);
+  const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(null);
   const [section, setSection] = useState(null);
 
@@ -44,6 +46,10 @@ function TaskModal({ open, handleClose, user, setUser }) {
     setProject(e.target.value)
   }
 
+  const handlePrioritySelect = (e) => {
+    setPriority(e.target.value)
+  }
+
 
   return (
     <Dialog
@@ -57,17 +63,37 @@ function TaskModal({ open, handleClose, user, setUser }) {
     </DialogTitle>
       <DialogContent>
         <form className={ classes.form } onSubmit={ createTask }>
-          <TextField label="Task Name" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
+          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>
             {user.projects.map(proj => (
               <MenuItem value={ proj.name }>{proj.name}</MenuItem>
             ))}
           </Select>
+          <InputLabel id="priority">Priority</InputLabel>
+          <Select value={ priority } id="priority" onChange={ handlePrioritySelect }>
+            <MenuItem value="Low">Low</MenuItem>
+            <MenuItem value="Medium">Medium</MenuItem>
+            <MenuItem value="High">High</MenuItem>
+          </Select>
+          <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="Due-Date"
+              label="Due Date"
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+              onChange={ setDueDate }
+            />
+          </MuiPickersUtilsProvider>
           <Button type="submit"
-            className={ classes.submitButton }>
-            Submit
-        </Button>
+              className={ classes.submitButton }>
+              Submit
+          </Button>
         </form>
       </DialogContent>
     </Dialog>
