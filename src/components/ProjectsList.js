@@ -14,46 +14,47 @@ function ProjectsList({ projects, setUser }) {
   const handleOpen = () => {
     setOpen(true)
   }
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(false)
   }
   return (
-      <Grid container spacing = { 3 }>
-        <Grid container>
-          <Grid item xs = { 10 }>
-            <Typography item xs= { 10 } variant = "h2" component="h1">
-              Projects
+    <Grid container spacing={ 3 }>
+      <Grid container>
+        <Grid item xs={ 10 }>
+          <Typography item xs={ 10 } variant="h2" component="h1">
+            Projects
             </Typography>
-          </Grid>
-          <Grid  item xs = { 12 } md= { 2 } className={ classes.buttonContainer }>
-            { projects.length > 0 &&
-              <Button className={ classes.addProjectButton }
-              variant="contained"
-              onClick = { handleOpen }
-              >
-                Add A Project
-              </Button>
-            }
-          </Grid> 
         </Grid>
-        { projects.length > 0 && projects.map((project) => (
-          <Grid key={ project.id } item xs = { 12 } sm = { 6 } md = { 4 } >
-            <ProjectCard project = { project }/>
-          </Grid>
-        ))}
-        { projects.length === 0 && 
+        <Grid item xs={ 12 } md={ 2 } className={ classes.buttonContainer }>
+          {projects.length > 0 &&
+            <Button className={ classes.addProjectButton }
+              variant="contained"
+              onClick={ handleOpen }
+            >
+              Add A Project
+              </Button>
+          }
+        </Grid>
+      </Grid>
+      { projects.length > 0 && projects.map((project) => (
+
+        <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
+          <ProjectCard project={ project } />
+        </Grid>
+      ))}
+      { projects.length === 0 &&
         <Grid>
-          <Typography variant = "h5"> You do not have any projects yet!</Typography>
+          <Typography variant="h5"> You do not have any projects yet!</Typography>
           <Button className={ classes.addProjectButton }
-          variant="contained"
-          onClick = { handleOpen }
+            variant="contained"
+            onClick={ handleOpen }
           >
             Add A Project
           </Button>
-        </Grid>       
-        }   
-        <ProjectModal setUser = { setUser } handleClose = { handleClose } open = { open }/>
-      </Grid>
+        </Grid>
+      }
+      <ProjectModal setUser={ setUser } handleClose={ handleClose } open={ open } />
+    </Grid>
   )
 }
 

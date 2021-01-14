@@ -12,9 +12,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Project from '../modules/Project';
 import useStyles from './styles/TaskModalStyle';
 import Task from '../modules/Task';
-import {findProject} from '../modules/hooks';
+import { findProject } from '../modules/hooks';
 
-function TaskModal({ open , handleClose, user, setUser }) {
+function TaskModal({ open, handleClose, user, setUser }) {
+  console.log(user.projects)
   const classes = useStyles()
   const [taskName, setTaskName] = useState("");
   const [project, setProject] = useState("All Tasks");
@@ -22,17 +23,20 @@ function TaskModal({ open , handleClose, user, setUser }) {
   const [dueDate, setDueDate] = useState(null);
   const [section, setSection] = useState(null);
 
-  
   const createTask = (e) => {
     e.preventDefault()
     const newTask = new Task(taskName, section, project, dueDate, priority)
     const projectToUpdate = findProject(user, project)
+    // spread the rest of the user
+    // find the project to update
+    // replace it with that project 
+    const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
-    setUser({...projectToUpdate})
+    setUser({ ...user, projects: [...prevProjects, projectToUpdate] })
     handleClose()
   }
 
-  const handleTaskNameChange = (e) =>{
+  const handleTaskNameChange = (e) => {
     setTaskName(e.target.value)
   }
 
@@ -40,31 +44,31 @@ function TaskModal({ open , handleClose, user, setUser }) {
     setProject(e.target.value)
   }
 
- 
+
   return (
     <Dialog
-    open={ open }
-    onClose={ handleClose }
-    aria-labelledby="add-task"
-    aria-describedby="Add a task modal"
-    >    
-    <DialogTitle className = { classes.header }>
-      Add A Task
+      open={ open }
+      onClose={ handleClose }
+      aria-labelledby="add-task"
+      aria-describedby="Add a task modal"
+    >
+      <DialogTitle className={ classes.header }>
+        Add A Task
     </DialogTitle>
-    <DialogContent>
-      <form className={ classes.form } onSubmit={ createTask }>
-        <TextField label="Task Name" name = "TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName }/> 
-        <InputLabel id="projects">Project</InputLabel>
-        <Select value="All Tasks" id="projects" onChange={handleSelect}>
-          { user.projects.map(proj => (
-            <MenuItem value={ proj.name }>{ proj.name }</MenuItem>
-          ))}
-        </Select>
-        <Button type = "submit"
-        className={ classes.submitButton }>
-        Submit
+      <DialogContent>
+        <form className={ classes.form } onSubmit={ createTask }>
+          <TextField label="Task Name" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
+          <InputLabel id="projects">Project</InputLabel>
+          <Select value={ project } id="projects" onChange={ handleSelect }>
+            {user.projects.map(proj => (
+              <MenuItem value={ proj.name }>{proj.name}</MenuItem>
+            ))}
+          </Select>
+          <Button type="submit"
+            className={ classes.submitButton }>
+            Submit
         </Button>
-      </form>
+        </form>
       </DialogContent>
     </Dialog>
   )

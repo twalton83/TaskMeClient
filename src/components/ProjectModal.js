@@ -21,7 +21,6 @@ function ProjectModal({ open , handleClose, setUser }) {
   const createProject = (e) => {
     e.preventDefault()
     const project = new Project(projectName, color)
-    console.log(project)
     setUser(prevState => ({
       ... prevState,
       projects: [...prevState.projects, project]
