@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ProjectCard from './ProjectCard';
 import TaskViewSection from './TaskViewSection'; 
-import TaskListItem from './TaskListItem';
 
 export default function HomeView({ projects }) {
   return (
@@ -18,7 +17,7 @@ export default function HomeView({ projects }) {
         <Typography variant="h3">
           All Tasks
         </Typography>
-        <Grid item xs= {12} sm = {10} md = {8}>
+        <Grid item xs= { 12 } sm = { 10 } md = { 8 }>
           {projects.map(project => (
             <TaskViewSection tasks = { project.tasks }/>
           ))}

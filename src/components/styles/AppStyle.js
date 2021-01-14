@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { useMediaQuery } from '@material-ui/core';
 
 const drawerWidth = 240
 
