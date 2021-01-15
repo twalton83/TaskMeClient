@@ -13,38 +13,30 @@ import {
 } from '@material-ui/pickers';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
-import useStyles from './styles/TaskModalStyle';
-import Task from '../modules/Task';
-import { findProject } from '../modules/helpers';
+import useStyles from './styles/TaskDetailsModalStyle';
+import { findTask } from '../modules/helpers';
 
-function TaskModal({ open, handleClose, user, setUser }) {
+function TaskDetailsModal({ open, handleClose, task }) {
   const classes = useStyles()
-  const [taskName, setTaskName] = useState("");
-  const [project, setProject] = useState("All Tasks");
-  const [priority, setPriority] = useState("Low");
-  const [dueDate, setDueDate] = useState(null);
-  const [section, setSection] = useState(null);
-
-  const createTask = (e) => {
+  const [taskName, setTaskName] = useState(task.name);
+  const [priority, setPriority] = useState(task.priority);
+  const [dueDate, setDueDate] = useState(task.dueDate);
+  const [section, setSection] = useState(task.section);
+  const [taskDescription, setTaskDescription] = useState("");
+  const editTask = (e) => {
     e.preventDefault()
-    const newTask = new Task(taskName, section, project, dueDate, priority)
-    const projectToUpdate = findProject(user, project)
-    // spread the rest of the user
-    // find the project to update
-    // replace it with that project 
-    const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
-    projectToUpdate.addTask(newTask)
-    setUser({ ...user, projects: [...prevProjects, projectToUpdate] })
-    setTaskName("")
     handleClose()
   }
 
   const handleTaskNameChange = (e) => {
     setTaskName(e.target.value)
   }
+  const handleTaskDescChange = (e) => {
+    setTaskDescription(e.target.value)
+  }
 
   const handleSelect = (e) => {
-    setProject(e.target.value)
+    e.preventDefault()
   }
 
   const handlePrioritySelect = (e) => {
@@ -56,21 +48,17 @@ function TaskModal({ open, handleClose, user, setUser }) {
     <Dialog
       open={ open }
       onClose={ handleClose }
-      aria-labelledby="add-task"
-      aria-describedby="Add a task modal"
+      aria-labelledby="edit-task"
+      aria-describedby="Edit a task modal"
     >
       <DialogTitle className={ classes.header }>
-        Add A Task
+        Task Details
     </DialogTitle>
       <DialogContent  className={ classes.root } >
-        <form className={ classes.form } onSubmit={ createTask }>
+        <form className={ classes.form } onSubmit={ editTask }>
           <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
-          <InputLabel id="projects">Project</InputLabel>
-          <Select value={ project } id="projects" onChange={ handleSelect }>
-            {user.projects.map(proj => (
-              <MenuItem key= { proj.id } value={ proj.name }>{proj.name}</MenuItem>
-            ))}
-          </Select>
+          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ taskDescription }multiline
+          rows={4} variant="filled"/>
           <InputLabel id="priority">Priority</InputLabel>
           <Select value={ priority } id="priority" onChange={ handlePrioritySelect }>
             <MenuItem value="Low">Low</MenuItem>
@@ -85,9 +73,9 @@ function TaskModal({ open, handleClose, user, setUser }) {
               margin="normal"
               id="Due-Date"
               label="Due Date"
-              KeyboardButtonProps={{
+              KeyboardButtonProps={ {
                 'aria-label': 'change date',
-              }}
+              } }
               onChange={ setDueDate }
             />
           </MuiPickersUtilsProvider>
@@ -101,4 +89,4 @@ function TaskModal({ open, handleClose, user, setUser }) {
   )
 }
 
-export default TaskModal
+export default TaskDetailsModal
