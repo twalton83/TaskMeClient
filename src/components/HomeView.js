@@ -18,13 +18,8 @@ export default function HomeView({ user, setUser }) {
           Upcoming Tasks
         </Typography>
         <Grid item xs= { 12 } sm = { 10 } md = { 8 }>
-<<<<<<< HEAD
           {user.projects.map(project => (
             <TaskViewSection user = { user } setUser = { setUser } tasks = { project.tasks } project = { project } />
-=======
-          {projects.map(project => (
-            <TaskViewSection tasks = { project.tasks }/>
->>>>>>> main
           ))}
         </Grid>
 
