@@ -27,6 +27,7 @@ export default function ProjectCard({ project }) {
             Details
           </Link>
         </Button>
+        
       </CardActions>
     </Card>
     
