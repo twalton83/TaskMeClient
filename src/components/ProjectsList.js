@@ -21,7 +21,7 @@ function ProjectsList({ projects, setUser }) {
     <Grid container spacing={ 3 }>
       <Grid container>
         <Grid item xs={ 10 }>
-          <Typography item xs={ 10 } variant="h2" component="h1">
+          <Typography xs={ 10 } variant="h2" component="h1">
             Projects
             </Typography>
         </Grid>
