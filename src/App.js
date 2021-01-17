@@ -26,6 +26,9 @@ import Task from './modules/Task';
 import TaskModal from './components/TaskModal';
 import { findProject } from './modules/helpers';
 
+// development only
+import seeds from './modules/seeds';
+
 function App() {
   const classes = useStyles()
   const theme = useTheme()
@@ -46,7 +49,9 @@ function App() {
   const grabStorage = () => {
     let user;
     if(localStorage.getItem('taskMe') === null) {
-      user = new User()
+      // dev only
+      user = new User(seeds())
+      console.log('dev user')
     } else {
       user =  JSON.parse(localStorage.getItem('taskMe'))
     }
