@@ -18,7 +18,7 @@ export default function HomeView({ user, setUser, deleteProj }) {
     setOpen(false)
   }
   const homeCompleteTask = (task) => {
-    const { project } = task
+    const project = user.projects.filter(proj => proj.tasks.includes(task))[0]
     const projectToUpdate = findProject(user, project.id)
     projectToUpdate.completeTask(task)
     const prevProjects = user.projects.filter(proj => proj !== project)

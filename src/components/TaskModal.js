@@ -27,8 +27,9 @@ function TaskModal({ open, handleClose, user, setUser }) {
 
   const createTask = (e) => {
     e.preventDefault()
-    const newTask = new Task(taskName, section, project, dueDate, priority, description)
+    const newTask = new Task(taskName, section, dueDate, priority, description)
     const projectToUpdate = findProjectByName(user, project)
+    console.log(projectToUpdate)
     const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
     setUser({ ...user, projects: [...prevProjects, projectToUpdate] })

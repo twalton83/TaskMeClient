@@ -1,10 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Task {
-  constructor(name, section, project, dueDate, priority, description) {
+  constructor(name, section, dueDate, priority, description) {
     this.name = name
     this.section = section
-    this.project = project
     this.dueDate = dueDate
     this.priority = priority
     this.id = uuidv4()
@@ -17,7 +16,6 @@ export default class Task {
   }
 
   edit(properties) {
-    console.log(properties)
     const props = Object.keys(properties)
     const values = Object.values(properties)
     props.forEach((prop, i) => {

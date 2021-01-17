@@ -15,6 +15,7 @@ import useStyles from './styles/TaskListItemStyle';
 import TaskDetailsModal from './TaskDetailsModal';
 
 export default function TaskListItem({ user, task, completeTask, setUser }) {
+  console.log(task)
   const classes = useStyles()
 
   const [open, setOpen] = useState(false);

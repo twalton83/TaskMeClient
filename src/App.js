@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { Transition } from 'react-transition-group';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -23,7 +23,9 @@ import TaskView from './components/TaskView';
 import User from './modules/User';
 import { useStyles } from './components/styles/AppStyle';
 import TaskModal from './components/TaskModal';
-import { findProject } from './modules/helpers';
+import { findProject, setLocalStorage, fetchLocalStorage } from './modules/helpers';
+import Project from './modules/Project';
+import Task from './modules/Task';
 
 // development only
 import seeds from './modules/seeds';
@@ -46,14 +48,25 @@ function App() {
     setModalOpen(false)
   }
   const grabStorage = () => {
-    let user;
+    let userData;
     if(localStorage.getItem('taskMe') === null) {
       // dev only
-      user = new User(seeds())
+      userData = new User(seeds())
     } else {
-      user =  JSON.parse(localStorage.getItem('taskMe'))
+      userData =  fetchLocalStorage()
+      userData.projects = userData.projects.map(p => {
+        const proj = new Project(p.name, p.color)
+        proj.tasks.map(t => {
+          console.log(t, "parsed task")
+          const task =  new Task(t.name, t.section, t.dueDate, t.priority, t.description) 
+          task.id = t.id
+          task.completed = t.completed
+          return task
+        })
+        return proj
+      })
     }
-    return user;
+    return userData;
   }
   const [user, setUser] = useState(grabStorage())
 
@@ -62,6 +75,10 @@ function App() {
     const prevProjects = user.projects.filter(proj => proj !== projectToRemove)
     setUser({ ...user, projects: [... prevProjects] })
   }
+
+  useEffect(() => {
+    setLocalStorage(user)
+  }, [user])
 
 
 

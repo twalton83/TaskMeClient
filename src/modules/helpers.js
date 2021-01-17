@@ -11,9 +11,18 @@ const findTask = (project, taskId) => {
   return task
 } 
 
+const setLocalStorage = (user) => {
+  localStorage.setItem('taskMe', JSON.stringify(user))
+}
+
+const fetchLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('taskMe'))
+}
 
 export {
   findProject,
   findTask,
-  findProjectByName
+  findProjectByName,
+  fetchLocalStorage,
+  setLocalStorage
 }
