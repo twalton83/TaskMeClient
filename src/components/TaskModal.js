@@ -21,8 +21,8 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const [taskName, setTaskName] = useState("");
   const [project, setProject] = useState("All Tasks");
   const [priority, setPriority] = useState("Low");
-  const [dueDate, setDueDate] = useState(null);
-  const [section, setSection] = useState(null);
+  const [dueDate, setDueDate] = useState(new Date());
+  const [section, setSection] = useState();
 
   const createTask = (e) => {
     e.preventDefault()
@@ -81,6 +81,7 @@ function TaskModal({ open, handleClose, user, setUser }) {
               margin="normal"
               id="Due-Date"
               label="Due Date"
+              value = { dueDate }
               KeyboardButtonProps={ {
                 'aria-label': 'change date',
               } }
