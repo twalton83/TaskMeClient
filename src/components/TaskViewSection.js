@@ -5,15 +5,13 @@ import List from '@material-ui/core/List';
 import useStyles from './styles/TaskViewSectionStyle';
 import TaskListItem from './TaskListItem';
 
-export default function TaskViewSection({ tasks, completeTask}) {
+export default function TaskViewSection({ tasks, completeTask, user, setUser }) {
   const classes = useStyles()
   return (
-    <Paper elevation= { 3 }>
       <List className={ classes.root } >
         { tasks.map(task => (         
-            <TaskListItem completeTask = { completeTask }  key = { task.id } task = { task }/>
+            <TaskListItem user =  { user } completeTask = { completeTask }  key = { task.id } task = { task } setUser = { setUser } />
         ))}
       </List>
-    </Paper>
   )
 }

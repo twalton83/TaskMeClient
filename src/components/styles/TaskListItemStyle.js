@@ -12,6 +12,16 @@ const useStyles = makeStyles(() => ({
  },
  pastDue: {
    color: "red"
+ },
+ accordion: {
+  width: "100%"
+ },
+ accordionFooter: {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%",
+  padding: 0
  }
 
 }));

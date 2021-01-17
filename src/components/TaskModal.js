@@ -23,10 +23,11 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(new Date());
   const [section, setSection] = useState();
+  const [description, setDescription] = useState("");
 
   const createTask = (e) => {
     e.preventDefault()
-    const newTask = new Task(taskName, section, project, dueDate, priority)
+    const newTask = new Task(taskName, section, project, dueDate, priority, description)
     const projectToUpdate = findProjectByName(user, project)
     const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
@@ -46,6 +47,9 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const handlePrioritySelect = (e) => {
     setPriority(e.target.value)
   }
+  const handleTaskDescChange = (e) => {
+    setDescription(e.target.value)
+  }
 
 
   return (
@@ -61,6 +65,8 @@ function TaskModal({ open, handleClose, user, setUser }) {
       <DialogContent  className={ classes.root } >
         <form className={ classes.form } onSubmit={ createTask }>
           <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
+          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
+          rows={ 4 } variant="filled"/>
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>
             {user.projects.map(proj => (

@@ -13,9 +13,7 @@ export default function TaskView({ user, setUser, project }) {
   const classes = useStyles()
   const completeTask = (taskId) => {
     const projectToUpdate = findProject(user, project.id)
-    console.log(projectToUpdate)
     projectToUpdate.completeTask(taskId)
-    console.log(projectToUpdate)
     const prevProjects = user.projects.filter(proj => proj !== project)
     setUser({ ...user, projects: [... prevProjects, projectToUpdate] })
   }
@@ -28,12 +26,12 @@ export default function TaskView({ user, setUser, project }) {
         <Typography variant="h2" component ="h1" align="center">{ project.name }</Typography>
       </Grid>
       <Grid item xs = { 12 } md = { 8 } className= { classes.incompletedTasks }>
-        <TaskViewSection completeTask = { completeTask } tasks = { incompleteTasks } project = { project } />
+        <TaskViewSection user = { user } completeTask = { completeTask } tasks = { incompleteTasks } project = { project } setUser = { setUser } />
       </Grid>
 
       {
        completedTasks.length > 0 &&
-      <Grid item xs = { 10 }>
+      <Grid item xs = { 10 }  className= { classes.completedTasks }>
         
         <Accordion>
           <AccordionSummary
@@ -44,7 +42,7 @@ export default function TaskView({ user, setUser, project }) {
           </AccordionSummary>
        
           <AccordionDetails>
-            <TaskViewSection completeTask = { completeTask } tasks = { completedTasks } project = { project } /> 
+            <TaskViewSection user = { user } completeTask = { completeTask } tasks = { completedTasks } project = { project } setUser = { setUser } /> 
           </AccordionDetails>
         </Accordion>
       </Grid>
