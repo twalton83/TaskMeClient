@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './styles/TaskModalStyle';
 import Task from '../modules/Task';
-import { findProject } from '../modules/helpers';
+import { findProjectByName } from '../modules/helpers';
 
 function TaskModal({ open, handleClose, user, setUser }) {
   const classes = useStyles()
@@ -27,10 +27,7 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const createTask = (e) => {
     e.preventDefault()
     const newTask = new Task(taskName, section, project, dueDate, priority)
-    const projectToUpdate = findProject(user, project)
-    // spread the rest of the user
-    // find the project to update
-    // replace it with that project 
+    const projectToUpdate = findProjectByName(user, project)
     const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
     setUser({ ...user, projects: [...prevProjects, projectToUpdate] })
@@ -84,9 +81,9 @@ function TaskModal({ open, handleClose, user, setUser }) {
               margin="normal"
               id="Due-Date"
               label="Due Date"
-              KeyboardButtonProps={{
+              KeyboardButtonProps={ {
                 'aria-label': 'change date',
-              }}
+              } }
               onChange={ setDueDate }
             />
           </MuiPickersUtilsProvider>

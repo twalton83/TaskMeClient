@@ -17,9 +17,9 @@ export default class Project {
     this.sections.push(section)
   }
 
-  completeTask(id) {
-    this.tasks.forEach(task => {
-        return task.id === id ? task.complete() : null
+  completeTask(task) {
+    this.tasks.forEach(t => {
+        return t === task ? t.complete() : null
     })
   }
 

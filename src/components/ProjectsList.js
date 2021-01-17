@@ -8,7 +8,7 @@ import ProjectModal from './ProjectModal';
 import ProjectCard from './ProjectCard';
 import useStyles from './styles/ProjectListStyle';
 
-function ProjectsList({ projects, setUser }) {
+function ProjectsList({ projects, setUser, deleteProj }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -39,7 +39,7 @@ function ProjectsList({ projects, setUser }) {
       { projects.length > 0 && projects.map((project) => (
 
         <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
-          <ProjectCard project={ project } />
+          <ProjectCard deleteProj = { deleteProj } project={ project } />
         </Grid>
       ))}
       { projects.length === 0 &&

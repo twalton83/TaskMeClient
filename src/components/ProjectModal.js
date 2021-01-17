@@ -44,7 +44,7 @@ function ProjectModal({ open , handleClose, setUser }) {
     </DialogTitle>
     <DialogContent>
       <form className={ classes.form } onSubmit={ createProject }>
-        <TextField label="Project Name" name = "projectName" type="text" onChange={ handleProjectNameChange } value={ projectName }/> 
+        <TextField required label="Project Name" name = "projectName" type="text" onChange={ handleProjectNameChange } value={ projectName }/> 
       </form>
       <Typography variant="subtitle1">
         Color

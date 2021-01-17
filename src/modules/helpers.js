@@ -1,6 +1,10 @@
-const findProject = (user, projectName) => {
-  return user.projects.find(project => projectName === project.name)
+const findProject = (user, projectId) => {
+  return user.projects.find(project => projectId === project.id)
 } 
+
+const findProjectByName = (user, projectName) => {
+  return user.projects.find(project => projectName === project.name)
+}
 
 const findTask = (project, taskId) => {
   const task = project.filter(t => t.id === taskId)[0];
@@ -10,5 +14,6 @@ const findTask = (project, taskId) => {
 
 export {
   findProject,
-  findTask
+  findTask,
+  findProjectByName
 }

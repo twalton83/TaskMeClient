@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import { Transition } from 'react-transition-group';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -21,8 +21,7 @@ import HomeView from './components/HomeView'
 import ProjectsList from './components/ProjectsList'
 import TaskView from './components/TaskView';
 import User from './modules/User';
-import { drawerWidth, useStyles } from './components/styles/AppStyle';
-import Task from './modules/Task';
+import { useStyles } from './components/styles/AppStyle';
 import TaskModal from './components/TaskModal';
 import { findProject } from './modules/helpers';
 
@@ -51,7 +50,6 @@ function App() {
     if(localStorage.getItem('taskMe') === null) {
       // dev only
       user = new User(seeds())
-      console.log('dev user')
     } else {
       user =  JSON.parse(localStorage.getItem('taskMe'))
     }
@@ -59,6 +57,11 @@ function App() {
   }
   const [user, setUser] = useState(grabStorage())
 
+  const deleteProj = (projectId) => {
+    const projectToRemove = findProject(user, projectId)
+    const prevProjects = user.projects.filter(proj => proj !== projectToRemove)
+    setUser({ ...user, projects: [... prevProjects] })
+  }
 
 
 
@@ -130,12 +133,12 @@ function App() {
       >
         <div className={ classes.drawerHeader } />
         <Switch>
-          <Route exact path="/projects" render = { ()=> <ProjectsList user = { user } setUser = { setUser } projects = { user.projects } /> }/>
+          <Route exact path="/projects" render = { ()=> <ProjectsList user = { user } setUser = { setUser } projects = { user.projects } deleteProj = { deleteProj } /> }/>
 
-          <Route exact path="/projects/:projectName"
-            render = { routeProps => <TaskView user = { user } setUser = { setUser } project={ findProject(user, routeProps.match.params.projectName) }/> }/>
+          <Route exact path="/projects/:projectId"
+            render = { routeProps => <TaskView user = { user } setUser = { setUser } project={ findProject(user, routeProps.match.params.projectId) }/> }/>
 
-          <Route exact path="/" render = { () => <HomeView user = { user } setUser = { setUser }  /> } />
+          <Route exact path="/" render = { () => <HomeView user = { user } setUser = { setUser }  deleteProj = { deleteProj } /> } />
         </Switch>
         <TaskModal user = { user } setUser = { setUser } handleClose = { handleModalClose } open = { modalOpen }/>
         </main>

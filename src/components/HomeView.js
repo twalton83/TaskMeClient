@@ -1,10 +1,29 @@
-import React from 'react'
+import { React, useState } from 'react'
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import ProjectCard from './ProjectCard';
 import TaskViewSection from './TaskViewSection'; 
+import ProjectModal from './ProjectModal';
+import { findProject } from '../modules/helpers';
+import useStyles from './styles/HomeViewStyle';
 
-export default function HomeView({ user, setUser }) {
+export default function HomeView({ user, setUser, deleteProj }) {
+  const classes = useStyles()
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const homeCompleteTask = (task) => {
+    const { project } = task
+    const projectToUpdate = findProject(user, project.id)
+    projectToUpdate.completeTask(task)
+    const prevProjects = user.projects.filter(proj => proj !== project)
+    setUser({ ...user, projects: [... prevProjects, projectToUpdate] })
+  }
   return (
     <Grid container>
       <Grid item xs={ 12 }>
@@ -17,9 +36,9 @@ export default function HomeView({ user, setUser }) {
         <Typography variant="h3">
           Upcoming Tasks
         </Typography>
-        <Grid item xs= { 12 } sm = { 10 } md = { 8 }>
+        <Grid item xs= { 12 } sm = { 10 } md = { 8 } className = { classes.upcomingTasks }>
           {user.projects.map(project => (
-            <TaskViewSection user = { user } setUser = { setUser } tasks = { project.tasks } project = { project } />
+            <TaskViewSection user = { user } setUser = { setUser } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
           ))}
         </Grid>
 
@@ -27,10 +46,22 @@ export default function HomeView({ user, setUser }) {
           Projects
         </Typography>
           
-        <Grid container spacing = { 3 }>
+        <Grid container spacing = { 3 } className= {classes.projectsList }>
+        { user.projects.length === 0 &&
+        <Grid item container direction ="column" justify = "space-evenly" alignItems="flex-start">
+          <Typography variant="h5"> You do not have any projects yet!</Typography>
+          <Button className={ classes.addProjectButton }
+            variant="contained"
+            onClick={ handleOpen }
+          >
+            Add A Project
+          </Button>
+        </Grid>
+      }
+      <ProjectModal setUser={ setUser } handleClose={ handleClose } open={ open } />
           {user.projects.map(project => (
             <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
-              <ProjectCard project={ project } />
+              <ProjectCard deleteProj = { deleteProj } project={ project } />
             </Grid>
           ))}
         </Grid>

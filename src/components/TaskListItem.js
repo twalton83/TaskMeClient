@@ -13,7 +13,7 @@ export default function TaskListItem({ task, completeTask }) {
 
   const handleClick = (e) => {
     e.stopPropagation()
-    completeTask(task.id)
+    completeTask(task)
   }
   const handleOpen = () => {
     setOpen(true)

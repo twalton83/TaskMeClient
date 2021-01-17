@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Task {
-  constructor(name, section, project, dueDate, priority, id) {
+  constructor(name, section, project, dueDate, priority) {
     this.name = name
     this.section = section
     this.project = project

@@ -5,11 +5,9 @@ import Task from './Task';
 
 function generateProjects() {
   const arr = []
-  for (let i = 0; i < 5; i++) { 
+  for (let i = 0; i < 3; i++) { 
     const project = new Project(`Project${i}`, 'blue')
-
-
-    for(let j = 0; j < 5; j++) {
+    for(let j = 0; j < 3; j++) {
       project.addTask(new Task(`Task${j}`, null, project, new Date(), 'low', uuidv4()))
     }
     arr.push(project)
