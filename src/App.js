@@ -74,9 +74,6 @@ function App() {
     setLocalStorage(user)
   }, [user])
 
-
-
-
   return (
     <section className={ classes.root }>
      <CssBaseline />
@@ -136,18 +133,19 @@ function App() {
                 Home
               </Link>
             </Typography>
-
           </ListItem>
+
           <ListItem>
             <Typography>
               <Link className = { classes.drawerLink } to="/projects">
                 Projects
               </Link>
             </Typography>
-
           </ListItem>
         </List>
+
         <Divider />
+
         <List />
       </Drawer>
       <main
