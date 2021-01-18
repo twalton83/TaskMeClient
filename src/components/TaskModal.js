@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -22,14 +23,12 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const [project, setProject] = useState("All Tasks");
   const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(new Date());
-  const [section, setSection] = useState();
   const [description, setDescription] = useState("");
 
   const createTask = (e) => {
     e.preventDefault()
-    const newTask = new Task(taskName, section, dueDate, priority, description)
+    const newTask = new Task(taskName, dueDate, priority, description, uuidv4())
     const projectToUpdate = findProjectByName(user, project)
-    console.log(projectToUpdate)
     const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
     setUser({ ...user, projects: [...prevProjects, projectToUpdate] })

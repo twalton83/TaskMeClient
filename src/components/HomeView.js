@@ -38,7 +38,7 @@ export default function HomeView({ user, setUser, deleteProj }) {
         </Typography>
         <Grid item xs= { 12 } sm = { 10 } md = { 8 } className = { classes.upcomingTasks }>
           {user.projects.map(project => (
-            <TaskViewSection user = { user } setUser = { setUser } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
+            <TaskViewSection key = { project.id } user = { user } setUser = { setUser } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
           ))}
         </Grid>
 
@@ -46,7 +46,7 @@ export default function HomeView({ user, setUser, deleteProj }) {
           Projects
         </Typography>
           
-        <Grid container spacing = { 3 } className= {classes.projectsList }>
+        <Grid container spacing = { 3 } className= { classes.projectsList }>
         { user.projects.length === 0 &&
         <Grid item container direction ="column" justify = "space-evenly" alignItems="flex-start">
           <Typography variant="h5"> You do not have any projects yet!</Typography>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import { Switch, Route, Link } from 'react-router-dom'
-import { Transition } from 'react-transition-group';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
@@ -27,9 +27,6 @@ import { findProject, setLocalStorage, fetchLocalStorage } from './modules/helpe
 import Project from './modules/Project';
 import Task from './modules/Task';
 
-// development only
-import seeds from './modules/seeds';
-
 function App() {
   const classes = useStyles()
   const theme = useTheme()
@@ -50,18 +47,15 @@ function App() {
   const grabStorage = () => {
     let userData;
     if(localStorage.getItem('taskMe') === null) {
-      // dev only
-      userData = new User(seeds())
+      userData = new User([new Project('All Tasks', { hex: '#eb5e28' }, uuidv4())])
     } else {
       userData =  fetchLocalStorage()
       userData.projects = userData.projects.map(p => {
-        const proj = new Project(p.name, p.color)
-        proj.tasks.map(t => {
-          console.log(t, "parsed task")
-          const task =  new Task(t.name, t.section, t.dueDate, t.priority, t.description) 
-          task.id = t.id
+        const proj = new Project(p.name, p.color, p.id)
+        p.tasks.forEach(t => {
+          const task =  new Task(t.name, new Date(t.dueDate), t.priority, t.description, t.id) 
           task.completed = t.completed
-          return task
+          proj.addTask(task)
         })
         return proj
       })

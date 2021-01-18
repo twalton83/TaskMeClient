@@ -1,5 +1,5 @@
 import { React, useState }  from 'react'
-import { isAfter, format } from 'date-fns';
+import { isAfter, format, parseISO } from 'date-fns';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -31,7 +31,7 @@ export default function TaskListItem({ user, task, completeTask, setUser }) {
     setOpen(false)
   }
 
-  const pastDue = () => isAfter(new Date(), task.dueDate)
+  const pastDue = () => isAfter((new Date()), task.dueDate)
 
 
 

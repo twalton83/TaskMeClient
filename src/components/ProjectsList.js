@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 import ProjectModal from './ProjectModal';
 import ProjectCard from './ProjectCard';
 import useStyles from './styles/ProjectListStyle';

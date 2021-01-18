@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -19,7 +20,7 @@ function ProjectModal({ open , handleClose, setUser }) {
   }
   const createProject = (e) => {
     e.preventDefault()
-    const project = new Project(projectName, color)
+    const project = new Project(projectName, color, uuidv4())
     setUser(prevState => ({
       ... prevState,
       projects: [...prevState.projects, project]

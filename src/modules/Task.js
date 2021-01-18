@@ -1,12 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export default class Task {
-  constructor(name, section, dueDate, priority, description) {
+  constructor(name, dueDate, priority, description, id) {
     this.name = name
-    this.section = section
     this.dueDate = dueDate
     this.priority = priority
-    this.id = uuidv4()
+    this.id = id
     this.completed = false
     this.description = description
   }

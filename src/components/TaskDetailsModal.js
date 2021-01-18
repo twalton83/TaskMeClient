@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,23 +13,21 @@ import {
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './styles/TaskDetailsModalStyle';
-import { findProject } from '../modules/helpers';
+import { findProjectByTask } from '../modules/helpers';
 
 function TaskDetailsModal({ open, handleClose, task, user, setUser }) {
   const classes = useStyles()
   const [taskName, setTaskName] = useState(task.name);
   const [priority, setPriority] = useState(task.priority);
   const [dueDate, setDueDate] = useState(task.dueDate);
-  const [section, setSection] = useState(task.section);
-  const [taskDescription, setTaskDescription] = useState("");
+  const [taskDescription, setTaskDescription] = useState(task.description);
 
   const editTask = (e) => {
     e.preventDefault()
     task.edit({
       taskName, priority, dueDate, taskDescription
     })
-    console.log(task)
-    const projectToUpdate = findProject(user, task.project.id)
+    const projectToUpdate = findProjectByTask(user, task)
     console.log(projectToUpdate)
     const prevProjects = user.projects.filter(proj => proj.id !== projectToUpdate.id)
     setUser({ ...user, projects: [... prevProjects, projectToUpdate] })

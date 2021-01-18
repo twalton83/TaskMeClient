@@ -1,12 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export default class Project {
-  constructor(name, color) {
+  constructor(name, color, id) {
     this.name = name
     this.sections = []
     this.tasks = []
     this.color = color
-    this.id = uuidv4()
+    this.id = id
   }
 
   addTask(task) {
