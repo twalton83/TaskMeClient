@@ -17,28 +17,27 @@ import { findProjectByTask } from '../modules/helpers';
 
 function TaskDetailsModal({ open, handleClose, task, user, setUser }) {
   const classes = useStyles()
-  const [taskName, setTaskName] = useState(task.name);
+  const [name, setName] = useState(task.name);
   const [priority, setPriority] = useState(task.priority);
   const [dueDate, setDueDate] = useState(task.dueDate);
-  const [taskDescription, setTaskDescription] = useState(task.description);
+  const [description, setDescription] = useState(task.description);
 
   const editTask = (e) => {
     e.preventDefault()
     task.edit({
-      taskName, priority, dueDate, taskDescription
+      name, priority, dueDate, description
     })
     const projectToUpdate = findProjectByTask(user, task)
-    console.log(projectToUpdate)
     const prevProjects = user.projects.filter(proj => proj.id !== projectToUpdate.id)
     setUser({ ...user, projects: [... prevProjects, projectToUpdate] })
     handleClose()
   }
 
   const handleTaskNameChange = (e) => {
-    setTaskName(e.target.value)
+    setName(e.target.value)
   }
   const handleTaskDescChange = (e) => {
-    setTaskDescription(e.target.value)
+    setDescription(e.target.value)
   }
 
   const handleSelect = (e) => {
@@ -62,8 +61,8 @@ function TaskDetailsModal({ open, handleClose, task, user, setUser }) {
     </DialogTitle>
       <DialogContent  className={ classes.root } >
         <form className={ classes.form } onSubmit={ editTask }>
-          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
-          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ taskDescription }multiline
+          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ name } />
+          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="priority">Priority</InputLabel>
           <Select value={ priority } id="priority" onChange={ handlePrioritySelect }>

@@ -31,18 +31,17 @@ export default function TaskView({ user, setUser, project }) {
 
       {
        completedTasks.length > 0 &&
-      <Grid item xs = { 10 }  className= { classes.completedTasks }>
-        
+         <Grid item xs = { 12 } md = { 8 } className= { classes.completedTasks }>
         <Accordion>
           <AccordionSummary
-           expandIcon={<ExpandMoreIcon />}
+           expandIcon={ <ExpandMoreIcon /> }
            aria-controls="panel1a-content"
            id="panel1a-header">
             <Typography variant="h6" align="center"> Completed Tasks </Typography>
           </AccordionSummary>
        
           <AccordionDetails>
-            <TaskViewSection user = { user } completeTask = { completeTask } tasks = { completedTasks } project = { project } setUser = { setUser } /> 
+            <TaskViewSection className={ classes.incompleteTaskSection } user = { user } completeTask = { completeTask } tasks = { completedTasks } project = { project } setUser = { setUser } /> 
           </AccordionDetails>
         </Accordion>
       </Grid>

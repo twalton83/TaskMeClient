@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { Switch, Route, Link } from 'react-router-dom'
+import { Switch, Route, Link, NavLink } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
@@ -97,8 +97,11 @@ function App() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
-              Task.Me
+            <Typography variant="h6" noWrap className={ classes.title }>
+              <NavLink to="/">
+                Task.Me
+              </NavLink>
+
             </Typography>
           </div>
           <IconButton onClick= { handleModalOpen } className={ classes.addButton }>
@@ -128,10 +131,20 @@ function App() {
         <Divider />
         <List>
           <ListItem>
-            <Link to="/">Home</Link>
+            <Typography>
+              <Link className = { classes.drawerLink } to="/">
+                Home
+              </Link>
+            </Typography>
+
           </ListItem>
           <ListItem>
-            <Link to="/projects">Projects</Link>
+            <Typography>
+              <Link className = { classes.drawerLink } to="/projects">
+                Projects
+              </Link>
+            </Typography>
+
           </ListItem>
         </List>
         <Divider />

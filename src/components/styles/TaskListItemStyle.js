@@ -16,6 +16,10 @@ const useStyles = makeStyles(() => ({
  accordion: {
   width: "100%"
  },
+ accordionSummary: {
+  display: "flex",
+  flexDirection: "column"
+ },
  accordionFooter: {
   display: "flex",
   flexDirection: "row",

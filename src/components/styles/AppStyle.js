@@ -79,6 +79,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
+  title: {
+    "& a": { 
+      textDecoration: "none",
+      color: "inherit"
+    }
+  },
+  drawerLink: {
+      textDecoration: "none",
+      color: "inherit"
   }
 
 }))

@@ -1,5 +1,5 @@
 import { React, useState }  from 'react'
-import { isAfter, format, parseISO } from 'date-fns';
+import { isAfter, format, parseISO, isSameDay } from 'date-fns';
 
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -15,7 +15,6 @@ import useStyles from './styles/TaskListItemStyle';
 import TaskDetailsModal from './TaskDetailsModal';
 
 export default function TaskListItem({ user, task, completeTask, setUser }) {
-  console.log(task)
   const classes = useStyles()
 
   const [open, setOpen] = useState(false);
@@ -31,19 +30,19 @@ export default function TaskListItem({ user, task, completeTask, setUser }) {
     setOpen(false)
   }
 
-  const pastDue = () => isAfter((new Date()), task.dueDate)
+  const pastDue = () => isAfter((new Date()), task.dueDate) && !isSameDay(new Date(), task.dueDate)
 
 
 
   return (
     <ListItem className= { classes.root } key={ task.id } >
       <Accordion className= { classes.accordion }>
-        <AccordionSummary>
+        <AccordionSummary >
           <ListItemText className= { pastDue() ? classes.pastDue : null }>
           {task.name}
         </ListItemText>
           <div>
-        { (task.priority === 'Medium' || task.priorty === 'High') && (
+        { (task.priority === 'Medium' || task.priority === 'High') && (
           <ListItemIcon  className= { classes.icon }>
             <PriorityHighIcon />
           </ListItemIcon>) }
@@ -52,13 +51,16 @@ export default function TaskListItem({ user, task, completeTask, setUser }) {
         </ListItemIcon>
         </div>
         </AccordionSummary> 
-        <AccordionDetails>
+        <AccordionDetails className= { classes.accordionSummary }>
         <Typography paragraph>
             { task.description }
           </Typography>
         <div className = { classes.accordionFooter }>
         <Typography className = { pastDue() ? classes.pastDue : null }>
             Due: { format(task.dueDate, 'P') }
+          </Typography>
+          <Typography paragraph>
+            Priority: { task.priority }
           </Typography>
           <Button  variant="contained"  onClick = { handleOpen }  >
             Edit
