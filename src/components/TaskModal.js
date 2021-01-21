@@ -17,7 +17,7 @@ import useStyles from './styles/TaskModalStyle';
 import Task from '../modules/Task';
 import { findProjectByName } from '../modules/helpers';
 
-function TaskModal({ open, handleClose, user, setUser }) {
+function TaskModal({ open, handleClose, projects, setProjects }) {
   const classes = useStyles()
   const [taskName, setTaskName] = useState("");
   const [project, setProject] = useState("All Tasks");
@@ -28,10 +28,10 @@ function TaskModal({ open, handleClose, user, setUser }) {
   const createTask = (e) => {
     e.preventDefault()
     const newTask = new Task(taskName, dueDate, priority, description, uuidv4())
-    const projectToUpdate = findProjectByName(user, project)
-    const prevProjects = user.projects.filter(proj => proj !== projectToUpdate)
+    const projectToUpdate = findProjectByName(projects, project)
+    const prevProjects = projects.filter(proj => proj !== projectToUpdate)
     projectToUpdate.addTask(newTask)
-    setUser({ ...user, projects: [...prevProjects, projectToUpdate] })
+    setProjects([...prevProjects, projectToUpdate])
     setTaskName("")
     handleClose()
   }
@@ -69,7 +69,7 @@ function TaskModal({ open, handleClose, user, setUser }) {
           rows={ 4 } variant="filled"/>
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>
-            {user.projects.map(proj => (
+            {projects.map(proj => (
               <MenuItem key= { proj.id } value={ proj.name }>{proj.name}</MenuItem>
             ))}
           </Select>

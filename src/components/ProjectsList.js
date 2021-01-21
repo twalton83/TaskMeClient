@@ -7,7 +7,7 @@ import ProjectModal from './ProjectModal';
 import ProjectCard from './ProjectCard';
 import useStyles from './styles/ProjectListStyle';
 
-function ProjectsList({ projects, setUser, deleteProj }) {
+function ProjectsList({ projects, setProjects, deleteProj }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -52,7 +52,7 @@ function ProjectsList({ projects, setUser, deleteProj }) {
           </Button>
         </Grid>
       }
-      <ProjectModal setUser={ setUser } handleClose={ handleClose } open={ open } />
+      <ProjectModal setProjects={ setProjects } handleClose={ handleClose } open={ open } />
     </Grid>
   )
 }

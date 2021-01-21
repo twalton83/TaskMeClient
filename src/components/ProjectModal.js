@@ -10,7 +10,7 @@ import { CirclePicker } from 'react-color';
 import Project from '../modules/Project';
 import useStyles from './styles/ProjectModalStyle';
 
-function ProjectModal({ open , handleClose, setUser }) {
+function ProjectModal({ open , handleClose, setProjects, projects }) {
   const classes = useStyles()
   
   const [projectName, setProjectName] = useState("");
@@ -21,10 +21,7 @@ function ProjectModal({ open , handleClose, setUser }) {
   const createProject = (e) => {
     e.preventDefault()
     const project = new Project(projectName, color, uuidv4())
-    setUser(prevState => ({
-      ... prevState,
-      projects: [...prevState.projects, project]
-    }))
+    setProjects([... projects, project])
     handleClose()
   }
   const handleProjectNameChange = (e) =>{

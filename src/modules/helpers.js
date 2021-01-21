@@ -1,13 +1,13 @@
-const findProject = (user, projectId) => {
-  return user.projects.find(project => projectId === project.id)
+const findProject = (projects, projectId) => {
+  return  projects.find(project => projectId === project.id)
 } 
 
-const findProjectByName = (user, projectName) => {
-  return user.projects.find(project => projectName === project.name)
+const findProjectByName = (projects, projectName) => {
+  return projects.find(project => projectName === project.name)
 }
 
-const findProjectByTask = (user, task) => {
-  return user.projects.filter(project => {
+const findProjectByTask = (projects, task) => {
+  return projects.filter(project => {
     return project.tasks.includes(task)
   })[0]
 }
@@ -17,8 +17,8 @@ const findTask = (project, taskId) => {
   return task
 } 
 
-const setLocalStorage = (user) => {
-  localStorage.setItem('taskMe', JSON.stringify(user))
+const setLocalStorage = (projects) => {
+  localStorage.setItem('taskMe', JSON.stringify(projects))
 }
 
 const fetchLocalStorage = () => {

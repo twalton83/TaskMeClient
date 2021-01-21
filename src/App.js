@@ -20,7 +20,6 @@ import AddIcon from '@material-ui/icons/Add';
 import HomeView from './components/HomeView'
 import ProjectsList from './components/ProjectsList'
 import TaskView from './components/TaskView';
-import User from './modules/User';
 import { useStyles } from './components/styles/AppStyle';
 import TaskModal from './components/TaskModal';
 import { findProject, setLocalStorage, fetchLocalStorage } from './modules/helpers';
@@ -45,12 +44,12 @@ function App() {
     setModalOpen(false)
   }
   const grabStorage = () => {
-    let userData;
+    let projectsData;
     if(localStorage.getItem('taskMe') === null) {
-      userData = new User([new Project('All Tasks', { hex: '#eb5e28' }, uuidv4())])
+      projectsData = [new Project('All Tasks', { hex: '#eb5e28' }, uuidv4())]
     } else {
-      userData =  fetchLocalStorage()
-      userData.projects = userData.projects.map(p => {
+      projectsData =  fetchLocalStorage()
+      projectsData = projectsData.map(p => {
         const proj = new Project(p.name, p.color, p.id)
         p.tasks.forEach(t => {
           const task =  new Task(t.name, new Date(t.dueDate), t.priority, t.description, t.id) 
@@ -60,19 +59,19 @@ function App() {
         return proj
       })
     }
-    return userData;
+    return projectsData;
   }
-  const [user, setUser] = useState(grabStorage())
+  const [projects, setProjects] = useState(grabStorage())
 
   const deleteProj = (projectId) => {
-    const projectToRemove = findProject(user, projectId)
-    const prevProjects = user.projects.filter(proj => proj !== projectToRemove)
-    setUser({ ...user, projects: [... prevProjects] })
+    const projectToRemove = findProject(projects, projectId)
+    const prevProjects = projects.filter(proj => proj !== projectToRemove)
+    setProjects([... prevProjects])
   }
 
   useEffect(() => {
-    setLocalStorage(user)
-  }, [user])
+    setLocalStorage(projects)
+  }, [projects])
 
   return (
     <section className={ classes.root }>
@@ -155,14 +154,14 @@ function App() {
       >
         <div className={ classes.drawerHeader } />
         <Switch>
-          <Route exact path="/projects" render = { ()=> <ProjectsList user = { user } setUser = { setUser } projects = { user.projects } deleteProj = { deleteProj } /> }/>
+          <Route exact path="/projects" render = { ()=> <ProjectsList setProjects= { setProjects } projects = { projects } deleteProj = { deleteProj } /> }/>
 
           <Route exact path="/projects/:projectId"
-            render = { routeProps => <TaskView user = { user } setUser = { setUser } project={ findProject(user, routeProps.match.params.projectId) }/> }/>
+            render = { routeProps => <TaskView projects = { projects } project={ findProject(projects, routeProps.match.params.projectId) }/> }/>
 
-          <Route exact path="/" render = { () => <HomeView user = { user } setUser = { setUser }  deleteProj = { deleteProj } /> } />
+          <Route exact path="/" render = { () => <HomeView projects =  { projects } setProjects = { setProjects }  deleteProj = { deleteProj } /> } />
         </Switch>
-        <TaskModal user = { user } setUser = { setUser } handleClose = { handleModalClose } open = { modalOpen }/>
+        <TaskModal projects =  { projects } setProjects = { setProjects }  handleClose = { handleModalClose } open = { modalOpen }/>
         </main>
     </section>
   )

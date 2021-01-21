@@ -8,7 +8,7 @@ import ProjectModal from './ProjectModal';
 import { findProject } from '../modules/helpers';
 import useStyles from './styles/HomeViewStyle';
 
-export default function HomeView({ user, setUser, deleteProj }) {
+export default function HomeView({ projects, setProjects, deleteProj }) {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -18,11 +18,11 @@ export default function HomeView({ user, setUser, deleteProj }) {
     setOpen(false)
   }
   const homeCompleteTask = (task) => {
-    const project = user.projects.filter(proj => proj.tasks.includes(task))[0]
-    const projectToUpdate = findProject(user, project.id)
+    const project = projects.filter(proj => proj.tasks.includes(task))[0]
+    const projectToUpdate = findProject(projects, project.id)
     projectToUpdate.completeTask(task)
-    const prevProjects = user.projects.filter(proj => proj !== project)
-    setUser({ ...user, projects: [... prevProjects, projectToUpdate] })
+    const prevProjects = projects.filter(proj => proj !== project)
+    setProjects([... prevProjects, projectToUpdate])
   }
   return (
     <Grid container>
@@ -37,8 +37,8 @@ export default function HomeView({ user, setUser, deleteProj }) {
           Upcoming Tasks
         </Typography>
         <Grid item xs= { 12 } sm = { 10 } md = { 8 } className = { classes.upcomingTasks }>
-          {user.projects.map(project => (
-            <TaskViewSection key = { project.id } user = { user } setUser = { setUser } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
+          {projects.map(project => (
+            <TaskViewSection key = { project.id } projects = { projects } setProjects = { setProjects } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
           ))}
         </Grid>
 
@@ -47,7 +47,7 @@ export default function HomeView({ user, setUser, deleteProj }) {
         </Typography>
           
         <Grid container spacing = { 3 } className= { classes.projectsList }>
-        { user.projects.length === 0 &&
+        { projects.length === 0 &&
         <Grid item container direction ="column" justify = "space-evenly" alignItems="flex-start">
           <Typography variant="h5"> You do not have any projects yet!</Typography>
           <Button className={ classes.addProjectButton }
@@ -58,8 +58,8 @@ export default function HomeView({ user, setUser, deleteProj }) {
           </Button>
         </Grid>
       }
-      <ProjectModal setUser={ setUser } handleClose={ handleClose } open={ open } />
-          {user.projects.map(project => (
+      <ProjectModal setProjects={ setProjects } handleClose={ handleClose } open={ open } />
+          {projects.map(project => (
             <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
               <ProjectCard deleteProj = { deleteProj } project={ project } />
             </Grid>

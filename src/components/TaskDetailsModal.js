@@ -15,7 +15,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './styles/TaskDetailsModalStyle';
 import { findProjectByTask } from '../modules/helpers';
 
-function TaskDetailsModal({ open, handleClose, task, user, setUser }) {
+function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
   const classes = useStyles()
   const [name, setName] = useState(task.name);
   const [priority, setPriority] = useState(task.priority);
@@ -27,9 +27,9 @@ function TaskDetailsModal({ open, handleClose, task, user, setUser }) {
     task.edit({
       name, priority, dueDate, description
     })
-    const projectToUpdate = findProjectByTask(user, task)
-    const prevProjects = user.projects.filter(proj => proj.id !== projectToUpdate.id)
-    setUser({ ...user, projects: [... prevProjects, projectToUpdate] })
+    const projectToUpdate = findProjectByTask(projects, task)
+    const prevProjects = projects.filter(proj => proj.id !== projectToUpdate.id)
+    setProjects([... prevProjects, projectToUpdate])
     handleClose()
   }
 

@@ -14,7 +14,7 @@ import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import useStyles from './styles/TaskListItemStyle';
 import TaskDetailsModal from './TaskDetailsModal';
 
-export default function TaskListItem({ user, task, completeTask, setUser }) {
+export default function TaskListItem({ projects, task, completeTask, setProjects }) {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false);
@@ -68,7 +68,7 @@ export default function TaskListItem({ user, task, completeTask, setUser }) {
         </div>
         </AccordionDetails>
       </Accordion>
-      <TaskDetailsModal user = { user } handleClose={ handleClose } open={ open } task = { task } setUser = { setUser } />    
+      <TaskDetailsModal projects = { projects } handleClose={ handleClose } open={ open } task = { task } setProjects = { setProjects } />    
     </ListItem>
     
   )
