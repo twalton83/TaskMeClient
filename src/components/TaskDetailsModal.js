@@ -40,10 +40,6 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
     setDescription(e.target.value)
   }
 
-  const handleSelect = (e) => {
-    e.preventDefault()
-  }
-
   const handlePrioritySelect = (e) => {
     setPriority(e.target.value)
   }

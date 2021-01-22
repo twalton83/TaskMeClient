@@ -15,16 +15,23 @@ function ProjectModal({ open , handleClose, setProjects, projects }) {
   
   const [projectName, setProjectName] = useState("");
   const [color, setColor] = useState({ hex: "#f44336" });
+  const [error, setError] = useState(null);
   const handleColorChange = (newColor) => {
     setColor(newColor)
   }
   const createProject = (e) => {
     e.preventDefault()
+    if (projectName === "") {
+      setError(true)
+      return
+    }
     const project = new Project(projectName, color, uuidv4())
     setProjects([... projects, project])
+    setError(false)
     handleClose()
   }
   const handleProjectNameChange = (e) =>{
+    setError(false)
     setProjectName(e.target.value)
   }
  
@@ -42,7 +49,8 @@ function ProjectModal({ open , handleClose, setProjects, projects }) {
     </DialogTitle>
     <DialogContent>
       <form className={ classes.form } onSubmit={ createProject }>
-        <TextField required label="Project Name" name = "projectName" type="text" onChange={ handleProjectNameChange } value={ projectName }/> 
+        <TextField error = { error }
+        helperText = { error ? "A name is required." : null } required label="Project Name" name = "projectName" type="text" onChange={ handleProjectNameChange } value={ projectName }/> 
       </form>
       <Typography variant="subtitle1">
         Color

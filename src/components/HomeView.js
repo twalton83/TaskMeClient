@@ -24,6 +24,17 @@ export default function HomeView({ projects, setProjects, deleteProj }) {
     const prevProjects = projects.filter(proj => proj !== project)
     setProjects([... prevProjects, projectToUpdate])
   }
+
+  const upcomingTasks =  projects.map(project => (
+    <TaskViewSection key = { project.id } projects = { projects } setProjects = { setProjects } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
+  ))
+
+  const projectCards = projects.map(project => (
+    <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
+      <ProjectCard deleteProj = { deleteProj } project={ project } />
+    </Grid>
+  ))
+
   return (
     <Grid container>
       <Grid item xs={ 12 }>
@@ -31,15 +42,13 @@ export default function HomeView({ projects, setProjects, deleteProj }) {
           Welcome to Task.Me
         </Typography>
         <Typography paragraph>
-          Here you can find your upcoming tasks and pin your most important projects!
+          Here you can find your upcoming tasks and projects!
         </Typography>
         <Typography variant="h3">
           Upcoming Tasks
         </Typography>
         <Grid item xs= { 12 } sm = { 10 } md = { 8 } className = { classes.upcomingTasks }>
-          {projects.map(project => (
-            <TaskViewSection key = { project.id } projects = { projects } setProjects = { setProjects } tasks = { project.tasks.filter(task => !task.completed) } project = { project } completeTask = { homeCompleteTask } />
-          ))}
+          { upcomingTasks }
         </Grid>
 
         <Typography variant="h3">
@@ -59,12 +68,9 @@ export default function HomeView({ projects, setProjects, deleteProj }) {
         </Grid>
       }
       <ProjectModal setProjects={ setProjects } handleClose={ handleClose } open={ open } />
-          {projects.map(project => (
-            <Grid key={ project.id } item xs={ 12 } sm={ 6 } md={ 4 } >
-              <ProjectCard deleteProj = { deleteProj } project={ project } />
-            </Grid>
-          ))}
-        </Grid>
+      
+      { projectCards }
+      </Grid>
 
       </Grid>
     </Grid>

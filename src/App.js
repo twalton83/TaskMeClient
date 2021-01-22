@@ -157,7 +157,7 @@ function App() {
           <Route exact path="/projects" render = { ()=> <ProjectsList setProjects= { setProjects } projects = { projects } deleteProj = { deleteProj } /> }/>
 
           <Route exact path="/projects/:projectId"
-            render = { routeProps => <TaskView projects = { projects } project={ findProject(projects, routeProps.match.params.projectId) }/> }/>
+            render = { routeProps => <TaskView projects = { projects } setProjects = { setProjects } project={ findProject(projects, routeProps.match.params.projectId) }/> }/>
 
           <Route exact path="/" render = { () => <HomeView projects =  { projects } setProjects = { setProjects }  deleteProj = { deleteProj } /> } />
         </Switch>

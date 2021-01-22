@@ -9,7 +9,7 @@ export default class Task {
   }
 
   complete() {
-    this.completed = true
+    this.completed = !this.completed
   }
 
   edit(properties) {

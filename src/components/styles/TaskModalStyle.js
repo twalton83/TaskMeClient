@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     marginBottom: "1rem",
     justifyContent: "space-evenly",
-    height: "100%"
+    height: "100%",
   }
 
 }));
