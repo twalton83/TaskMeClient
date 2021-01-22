@@ -3,7 +3,10 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(() => ({
   root: {
     width: '400px',
-    height: '400px'
+    height: '400px',
+    '@media (max-width: 780px)': {
+      width: '100%'
+    }
   },
   header: {
     marginBottom: "1rem",
@@ -20,6 +23,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: "1rem",
     justifyContent: "space-evenly",
     height: "100%",
+    width: "100%"
   }
 
 }));
