@@ -46,10 +46,6 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
     setName(e.target.value)
   }
   const handleTaskDescChange = (e) => {
-    if (description === "") {
-      setError(true)
-      return
-    }
     setDescription(e.target.value)
   }
 
@@ -73,8 +69,7 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
           <TextField error = { error }
         helperText = { error ? "A task name is required." : null } required
         label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ name } />
-          <TextField error = { error }
-        helperText = { error ? "A description is required." : null } required
+          <TextField 
         label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="priority">Priority</InputLabel>
