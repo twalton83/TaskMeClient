@@ -81,6 +81,7 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
           </Select>
           <MuiPickersUtilsProvider utils={ DateFnsUtils }>
             <KeyboardDatePicker
+              autoOk
               disableToolbar
               variant="inline"
               format="MM/dd/yyyy"
