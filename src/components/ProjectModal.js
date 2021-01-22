@@ -28,6 +28,7 @@ function ProjectModal({ open , handleClose, setProjects, projects }) {
     const project = new Project(projectName, color, uuidv4())
     setProjects([... projects, project])
     setError(false)
+    setProjectName("")
     handleClose()
   }
   const handleProjectNameChange = (e) =>{

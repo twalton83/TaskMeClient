@@ -33,6 +33,9 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
     projectToUpdate.addTask(newTask)
     setProjects([...prevProjects, projectToUpdate])
     setTaskName("")
+    setDescription("")
+    setDueDate(new Date())
+    setPriority("Low")
     handleClose()
   }
 
