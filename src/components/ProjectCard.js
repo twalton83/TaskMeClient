@@ -28,7 +28,8 @@ export default function ProjectCard({ deleteProj,  project }) {
             Details
           </Link>
         </Button>
-        <DeleteIcon onClick={ () => deleteProj(project.id) }/>
+        { project.name !== "General" &&         <DeleteIcon onClick={ () => deleteProj(project.id) }/>}
+
       </CardActions>
     </Card>
     

@@ -20,13 +20,22 @@ import { findProjectByName } from '../modules/helpers';
 function TaskModal({ open, handleClose, projects, setProjects }) {
   const classes = useStyles()
   const [taskName, setTaskName] = useState("");
-  const [project, setProject] = useState("General");
+  const [project, setProject] = useState(projects[0].name);
   const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(new Date());
   const [description, setDescription] = useState("");
+  const [error, setError] = useState(false);
 
   const createTask = (e) => {
     e.preventDefault()
+    if (description === "") {
+      setError(true)
+      return
+    }
+    if (taskName === "") {
+      setError(true)
+      return
+    }
     const newTask = new Task(taskName, dueDate, priority, description, uuidv4())
     const projectToUpdate = findProjectByName(projects, project)
     const prevProjects = projects.filter(proj => proj !== projectToUpdate)
@@ -40,6 +49,7 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
   }
 
   const handleTaskNameChange = (e) => {
+    setError(false)
     setTaskName(e.target.value)
   }
 
@@ -51,6 +61,7 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
     setPriority(e.target.value)
   }
   const handleTaskDescChange = (e) => {
+    setError(false)
     setDescription(e.target.value)
   }
 
@@ -67,8 +78,10 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
     </DialogTitle>
       <DialogContent  className={ classes.root } >
         <form className={ classes.form } onSubmit={ createTask }>
-          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
-          <TextField  label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
+          <TextField error = { error }
+        helperText = { error ? "A task name is required." : null } label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
+          <TextField  error = { error }
+        helperText = { error ? "A description is required." : null } label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>

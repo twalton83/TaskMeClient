@@ -21,9 +21,14 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
   const [priority, setPriority] = useState(task.priority);
   const [dueDate, setDueDate] = useState(task.dueDate);
   const [description, setDescription] = useState(task.description);
+  const [error, setError] = useState(false);
 
   const editTask = (e) => {
     e.preventDefault()
+    if (name === "") {
+      setError(true)
+      return
+    }
     task.edit({
       name, priority, dueDate, description
     })
@@ -34,9 +39,17 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
   }
 
   const handleTaskNameChange = (e) => {
+    if (name === "") {
+      setError(true)
+      return
+    }
     setName(e.target.value)
   }
   const handleTaskDescChange = (e) => {
+    if (description === "") {
+      setError(true)
+      return
+    }
     setDescription(e.target.value)
   }
 
@@ -57,8 +70,12 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
     </DialogTitle>
       <DialogContent  className={ classes.root } >
         <form className={ classes.form } onSubmit={ editTask }>
-          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ name } />
-          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
+          <TextField error = { error }
+        helperText = { error ? "A task name is required." : null } required
+        label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ name } />
+          <TextField error = { error }
+        helperText = { error ? "A description is required." : null } required
+        label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="priority">Priority</InputLabel>
           <Select value={ priority } id="priority" onChange={ handlePrioritySelect }>
