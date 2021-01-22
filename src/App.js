@@ -69,6 +69,7 @@ function App() {
     setProjects([... prevProjects])
   }
 
+
   useEffect(() => {
     setLocalStorage(projects)
   }, [projects])

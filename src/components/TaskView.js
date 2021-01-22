@@ -19,6 +19,8 @@ export default function TaskView({ projects, setProjects, project }) {
   }
   const incompleteTasks = project.tasks.filter(task => !task.completed)
   const completedTasks = project.tasks.filter(task => task.completed)
+
+ 
   
   return (
     <Grid container alignItems="center" justify="center">
@@ -26,7 +28,7 @@ export default function TaskView({ projects, setProjects, project }) {
         <Typography variant="h2" component ="h1" align="center">{ project.name }</Typography>
       </Grid>
       <Grid item xs = { 12 } md = { 8 } className= { classes.incompletedTasks }>
-        <TaskViewSection projects = { projects } setProjects = { setProjects } completeTask = { completeTask } tasks = { incompleteTasks } project = { project }  />
+        <TaskViewSection projects = { projects } setProjects = { setProjects } completeTask = { completeTask } tasks = { incompleteTasks } project = { project } />
       </Grid>
 
       {

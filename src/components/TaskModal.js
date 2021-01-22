@@ -28,10 +28,6 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
 
   const createTask = (e) => {
     e.preventDefault()
-    if (description === "") {
-      setError(true)
-      return
-    }
     if (taskName === "") {
       setError(true)
       return
@@ -61,7 +57,6 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
     setPriority(e.target.value)
   }
   const handleTaskDescChange = (e) => {
-    setError(false)
     setDescription(e.target.value)
   }
 
@@ -80,8 +75,7 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
         <form className={ classes.form } onSubmit={ createTask }>
           <TextField error = { error }
         helperText = { error ? "A task name is required." : null } label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
-          <TextField  error = { error }
-        helperText = { error ? "A description is required." : null } label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
+          <TextField label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>

@@ -10,6 +10,12 @@ const useStyles = makeStyles(() => ({
      fill: "#eb5e28"
    }
  },
+ deleteButton: {
+   marginLeft: "5px",
+  "&:hover": {
+    fill: "red"
+  }
+  },
  pastDue: {
    color: "red"
  },

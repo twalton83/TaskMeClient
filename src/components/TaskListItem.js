@@ -11,10 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import useStyles from './styles/TaskListItemStyle';
 import TaskDetailsModal from './TaskDetailsModal';
 
-export default function TaskListItem({ projects, task, completeTask, setProjects }) {
+export default function TaskListItem({ projects, task, completeTask, setProjects, deleteTask }) {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false);
@@ -28,6 +29,11 @@ export default function TaskListItem({ projects, task, completeTask, setProjects
   }
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleDelete = (e) => {
+    e.stopPropagation()
+    deleteTask(task.id)
   }
 
   const pastDue = () => isAfter((new Date()), task.dueDate) && !isSameDay(new Date(), task.dueDate)
@@ -46,6 +52,9 @@ export default function TaskListItem({ projects, task, completeTask, setProjects
           <ListItemIcon  className= { classes.icon }>
             <PriorityHighIcon />
           </ListItemIcon>) }
+          <ListItemIcon className= { classes.icon }>
+          <DeleteForeverIcon onClick= { handleDelete } className={ classes.checkButton }/>
+        </ListItemIcon>
         <ListItemIcon className= { classes.icon }>
           <CheckCircleIcon onClick= { handleClick } className={ classes.checkButton }/>
         </ListItemIcon>
