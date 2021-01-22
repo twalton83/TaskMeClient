@@ -46,7 +46,7 @@ function App() {
   const grabStorage = () => {
     let projectsData;
     if(localStorage.getItem('taskMe') === null) {
-      projectsData = [new Project('All Tasks', { hex: '#eb5e28' }, uuidv4())]
+      projectsData = [new Project('General', { hex: '#eb5e28' }, uuidv4())]
     } else {
       projectsData =  fetchLocalStorage()
       projectsData = projectsData.map(p => {

@@ -20,7 +20,7 @@ import { findProjectByName } from '../modules/helpers';
 function TaskModal({ open, handleClose, projects, setProjects }) {
   const classes = useStyles()
   const [taskName, setTaskName] = useState("");
-  const [project, setProject] = useState("All Tasks");
+  const [project, setProject] = useState("General");
   const [priority, setPriority] = useState("Low");
   const [dueDate, setDueDate] = useState(new Date());
   const [description, setDescription] = useState("");
@@ -64,8 +64,8 @@ function TaskModal({ open, handleClose, projects, setProjects }) {
     </DialogTitle>
       <DialogContent  className={ classes.root } >
         <form className={ classes.form } onSubmit={ createTask }>
-          <TextField color = "#eb5e28" label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
-          <TextField  color = "#eb5e28" label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
+          <TextField label="Task" name="TaskName" type="text" onChange={ handleTaskNameChange } value={ taskName } />
+          <TextField  label="Description" name="TaskDesc" onChange={ handleTaskDescChange } value={ description }multiline
           rows={ 4 } variant="filled"/>
           <InputLabel id="projects">Project</InputLabel>
           <Select value={ project } id="projects" onChange={ handleSelect }>

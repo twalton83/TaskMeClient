@@ -67,7 +67,7 @@ export default function HomeView({ projects, setProjects, deleteProj }) {
           </Button>
         </Grid>
       }
-      <ProjectModal setProjects={ setProjects } handleClose={ handleClose } open={ open } />
+      <ProjectModal projects = { projects } setProjects={ setProjects } handleClose={ handleClose } open={ open } />
       
       { projectCards }
       </Grid>
