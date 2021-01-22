@@ -87,6 +87,7 @@ function TaskDetailsModal({ open, handleClose, task, projects, setProjects }) {
               margin="normal"
               id="Due-Date"
               label="Due Date"
+              value = { dueDate }
               KeyboardButtonProps={ {
                 'aria-label': 'change date',
               } }

@@ -5,7 +5,6 @@ import TaskListItem from './TaskListItem';
 import { findProject } from '../modules/helpers';
 
 export default function TaskViewSection({ tasks, completeTask, projects, setProjects, project }) {
-
   const deleteTask = (id) => {
     const projectToUpdate = findProject(projects, project.id)
     projectToUpdate.deleteTask(id)
